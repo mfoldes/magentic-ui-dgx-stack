@@ -115,9 +115,7 @@ magentic-ui-dgx-stack/
 │   ├── validate-deployment.sh   # Validate installation
 │   └── benchmark.sh             # Performance benchmarks
 ├── config/                      # Configuration files
-│   ├── vllm-config.yaml         # vLLM server configuration
-│   ├── magentic-ui-config.yaml  # Magentic-UI configuration
-│   └── endpoint-config.json     # API endpoint configuration
+│   └── fara-config.yaml         # FARA-7B model client configuration
 ├── fine-tuning/                 # Fine-tuning resources
 │   ├── README.md                # Fine-tuning documentation
 │   ├── requirements.txt         # Python dependencies

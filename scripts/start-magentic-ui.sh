@@ -31,6 +31,7 @@ MAGENTIC_UI_PORT="${MAGENTIC_UI_PORT:-4200}"
 VLLM_PORT="${VLLM_PORT:-5000}"
 VLLM_MODEL="${VLLM_MODEL:-microsoft/Fara-7B}"
 VENV_DIR="${PROJECT_ROOT}/venv"
+FARA_CONFIG="${PROJECT_ROOT}/config/fara-config.yaml"
 
 echo -e "${CYAN}"
 echo "╔═══════════════════════════════════════════════════════════════════════╗"
@@ -42,6 +43,7 @@ echo -e "${BLUE}Configuration:${NC}"
 echo "  Port:           $MAGENTIC_UI_PORT"
 echo "  vLLM Endpoint:  http://localhost:${VLLM_PORT}"
 echo "  Model:          $VLLM_MODEL"
+echo "  Config:         $FARA_CONFIG"
 echo ""
 
 # Check if vLLM is running
@@ -76,9 +78,9 @@ fi
 source "${VENV_DIR}/bin/activate"
 
 # Set environment variables for Magentic-UI
-export OPENAI_API_KEY="local-vllm"
-export OPENAI_BASE_URL="http://localhost:${VLLM_PORT}/v1"
-export MODEL_NAME="${VLLM_MODEL}"
+#export OPENAI_API_KEY="local-vllm"
+#export OPENAI_BASE_URL="http://localhost:${VLLM_PORT}/v1"
+#export MODEL_NAME="${VLLM_MODEL}"
 
 # Create workspace directory if needed
 mkdir -p "${PROJECT_ROOT}/workspace"
@@ -92,6 +94,6 @@ echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 
-# Run Magentic-UI with the port flag
+# Run Magentic-UI with the port flag and FARA config
 cd "${PROJECT_ROOT}/workspace"
-magentic-ui --port ${MAGENTIC_UI_PORT}
+magentic-ui --fara --port ${MAGENTIC_UI_PORT} --config "${FARA_CONFIG}"

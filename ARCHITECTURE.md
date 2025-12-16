@@ -33,10 +33,8 @@ magentic-ui-dgx-stack/
 │   ├── validate-deployment.sh         # Automated test suite
 │   └── benchmark.sh                   # Performance benchmarking
 │
-├── config/                            # 3 configuration files
-│   ├── vllm-config.yaml               # vLLM server settings (reference)
-│   ├── magentic-ui-config.yaml        # Agent configuration (reference)
-│   └── endpoint-config.json           # API endpoint for Magentic-UI
+├── config/                            # Configuration files
+│   └── fara-config.yaml               # FARA-7B model client configuration
 │
 ├── docker/
 │   └── docker-compose.yml             # vLLM container only
@@ -263,15 +261,13 @@ User Input → Orchestrator → Creates Plan → User Approves
 | File | Purpose | Used By |
 |------|---------|---------|
 | `.env` | Runtime environment variables | All scripts |
-| `config/vllm-config.yaml` | Reference documentation for vLLM settings | Human reference |
-| `config/magentic-ui-config.yaml` | Reference for agent configuration | Human reference |
-| `config/endpoint-config.json` | Can be passed to Magentic-UI for API settings | `magentic-ui` CLI |
+| `config/fara-config.yaml` | FARA-7B model client configuration | `magentic-ui --config` |
 
-**Note:** The YAML configs are primarily documentation/reference. The actual runtime configuration comes from:
+**Runtime configuration sources:**
 
 - `.env` file (loaded by scripts)
+- `config/fara-config.yaml` (passed to magentic-ui via `--config`)
 - Command-line arguments to `vllm serve` and `magentic-ui`
-- Environment variables (`OPENAI_BASE_URL`, etc.)
 
 ---
 

@@ -304,21 +304,8 @@ setup_magentic_ui() {
     playwright install chromium
     
     deactivate
-    
+
     log OK "Magentic-UI installed successfully"
-    
-    # Create endpoint configuration
-    log STEP "Creating endpoint configuration..."
-    cat > "${PROJECT_ROOT}/config/endpoint-config.json" << EOF
-{
-    "model": "${FARA_MODEL}",
-    "base_url": "http://localhost:${VLLM_PORT}/v1",
-    "api_key": "local-vllm",
-    "max_tokens": 2048,
-    "temperature": 0.0
-}
-EOF
-    log OK "Endpoint configuration created"
 }
 
 # ============================================================================
