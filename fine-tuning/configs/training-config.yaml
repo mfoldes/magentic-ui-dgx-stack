@@ -1,0 +1,61 @@
+# ============================================================================
+# Training Configuration for Fara-7B Fine-Tuning on DGX Spark
+# ============================================================================
+# Optimized for NVIDIA Blackwell GB10 with 128GB unified memory
+# ============================================================================
+
+# Model Configuration
+model:
+  base_model: "microsoft/Fara-7B"
+  max_seq_length: 16384
+  load_in_4bit: false  # Full precision for DGX Spark's ample memory
+
+# LoRA Configuration
+lora:
+  r: 16                # LoRA rank (higher = more capacity, more memory)
+  alpha: 32            # LoRA alpha (typically 2x rank)
+  dropout: 0.05        # Dropout for regularization
+  target_modules:      # Modules to apply LoRA to
+    - "q_proj"
+    - "k_proj"
+    - "v_proj"
+    - "o_proj"
+    - "gate_proj"
+    - "up_proj"
+    - "down_proj"
+
+# Training Configuration
+training:
+  epochs: 3
+  batch_size: 4
+  gradient_accumulation: 4    # Effective batch size = 4 * 4 = 16
+  learning_rate: 2.0e-4
+  warmup_ratio: 0.03
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+
+# Data Configuration
+data:
+  path: "./data/training.jsonl"
+  text_field: "text"
+
+# Output Configuration
+output:
+  dir: "./output"
+  save_steps: 500
+  save_total_limit: 3
+
+# DGX Spark Optimizations
+optimization:
+  use_gradient_checkpointing: true
+  optim: "adamw_8bit"     # 8-bit optimizer for memory efficiency
+  fp16: false              # Don't use FP16 (use BF16 instead)
+  bf16: true               # BF16 is optimal for Blackwell
+
+# Logging Configuration
+logging:
+  steps: 10
+  report_to:
+    - tensorboard
+  # Uncomment to enable Weights & Biases:
+  # - wandb

@@ -1,0 +1,7 @@
+# This directory stores downloaded model files
+# Models are cached here for faster subsequent loads
+
+# To manually download Fara-7B:
+# huggingface-cli download microsoft/Fara-7B --local-dir ./fara-7b
+
+# Fine-tuned models can also be placed here

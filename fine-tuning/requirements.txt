@@ -1,0 +1,47 @@
+# ============================================================================
+# Fine-Tuning Dependencies for Fara-7B on DGX Spark
+# ============================================================================
+# Install with: pip install -r requirements.txt
+# ============================================================================
+
+# Unsloth - Memory efficient training (2-5x faster, 60% less memory)
+unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git
+
+# Core ML/Training Libraries
+torch>=2.1.0
+transformers>=4.40.0
+datasets>=2.18.0
+accelerate>=0.28.0
+peft>=0.10.0
+trl>=0.8.0
+bitsandbytes>=0.43.0
+
+# Vision-Language Model Support
+Pillow>=10.0.0
+qwen-vl-utils>=0.0.2
+
+# Data Processing
+pandas>=2.0.0
+numpy>=1.24.0
+pyarrow>=14.0.0
+jsonlines>=4.0.0
+
+# Configuration
+pyyaml>=6.0.0
+omegaconf>=2.3.0
+
+# Progress and Logging
+tqdm>=4.65.0
+rich>=13.0.0
+
+# Experiment Tracking (Optional)
+wandb>=0.16.0
+tensorboard>=2.15.0
+
+# Evaluation
+scikit-learn>=1.3.0
+rouge-score>=0.1.2
+
+# Utilities
+click>=8.1.0
+python-dotenv>=1.0.0

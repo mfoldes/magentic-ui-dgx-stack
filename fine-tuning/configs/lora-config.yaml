@@ -1,0 +1,129 @@
+# ============================================================================
+# LoRA Adapter Configuration Presets
+# ============================================================================
+# Pre-configured settings for different training scenarios on DGX Spark
+# ============================================================================
+
+# ============================================================================
+# Preset Configurations
+# ============================================================================
+# Choose a preset by copying its values to your training-config.yaml
+# or reference directly in your training script
+
+presets:
+  # --------------------------------------------------------------------------
+  # Quick: Fast training with good results
+  # --------------------------------------------------------------------------
+  # Best for: Rapid prototyping, testing dataset quality
+  # Memory: ~15-20 GB GPU
+  # Speed: Fastest
+  quick:
+    r: 8
+    alpha: 16
+    dropout: 0.1
+    target_modules:
+      - "q_proj"
+      - "v_proj"
+
+  # --------------------------------------------------------------------------
+  # Balanced: Recommended default configuration
+  # --------------------------------------------------------------------------
+  # Best for: General fine-tuning, production models
+  # Memory: ~25-30 GB GPU
+  # Speed: Fast
+  balanced:
+    r: 16
+    alpha: 32
+    dropout: 0.05
+    target_modules:
+      - "q_proj"
+      - "k_proj"
+      - "v_proj"
+      - "o_proj"
+
+  # --------------------------------------------------------------------------
+  # Quality: Higher quality results
+  # --------------------------------------------------------------------------
+  # Best for: When accuracy is more important than speed
+  # Memory: ~35-45 GB GPU
+  # Speed: Medium
+  quality:
+    r: 32
+    alpha: 64
+    dropout: 0.05
+    target_modules:
+      - "q_proj"
+      - "k_proj"
+      - "v_proj"
+      - "o_proj"
+      - "gate_proj"
+      - "up_proj"
+      - "down_proj"
+
+  # --------------------------------------------------------------------------
+  # Maximum: Best possible quality
+  # --------------------------------------------------------------------------
+  # Best for: Final production models, maximum accuracy needed
+  # Memory: ~50-65 GB GPU
+  # Speed: Slower
+  max:
+    r: 64
+    alpha: 128
+    dropout: 0.05
+    target_modules:
+      - "q_proj"
+      - "k_proj"
+      - "v_proj"
+      - "o_proj"
+      - "gate_proj"
+      - "up_proj"
+      - "down_proj"
+
+# ============================================================================
+# Memory Estimates for DGX Spark (128GB Unified Memory)
+# ============================================================================
+#
+# | Preset   | Approx GPU Memory | Available for Batch |
+# |----------|-------------------|---------------------|
+# | quick    | ~20 GB            | ~108 GB             |
+# | balanced | ~28 GB            | ~100 GB             |
+# | quality  | ~42 GB            | ~86 GB              |
+# | max      | ~58 GB            | ~70 GB              |
+#
+# DGX Spark's unified memory allows larger batch sizes than discrete GPUs
+# ============================================================================
+
+# ============================================================================
+# Target Modules Reference
+# ============================================================================
+# These are the attention and feed-forward layers in Fara-7B (Qwen2.5-VL based):
+#
+# Attention layers:
+#   - q_proj: Query projection
+#   - k_proj: Key projection  
+#   - v_proj: Value projection
+#   - o_proj: Output projection
+#
+# Feed-forward layers:
+#   - gate_proj: Gate projection (SwiGLU)
+#   - up_proj: Up projection
+#   - down_proj: Down projection
+#
+# General guidance:
+#   - Minimum: q_proj, v_proj (attention only)
+#   - Recommended: q_proj, k_proj, v_proj, o_proj (full attention)
+#   - Maximum: All modules (attention + feed-forward)
+# ============================================================================
+
+# ============================================================================
+# Learning Rate Guidelines
+# ============================================================================
+# | LoRA Rank | Recommended LR | Range           |
+# |-----------|----------------|-----------------|
+# | 8         | 3e-4           | 2e-4 - 5e-4     |
+# | 16        | 2e-4           | 1e-4 - 3e-4     |
+# | 32        | 1.5e-4         | 1e-4 - 2e-4     |
+# | 64        | 1e-4           | 5e-5 - 1.5e-4   |
+#
+# Higher ranks generally need lower learning rates
+# ============================================================================

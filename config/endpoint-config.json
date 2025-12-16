@@ -1,0 +1,10 @@
+{
+    "model": "microsoft/Fara-7B",
+    "base_url": "http://localhost:5000/v1",
+    "api_key": "local-vllm",
+    "max_tokens": 2048,
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "stop": ["<|endoftext|>", "<|im_end|>"],
+    "_comment": "Configuration for connecting Magentic-UI to local vLLM server running Fara-7B"
+}

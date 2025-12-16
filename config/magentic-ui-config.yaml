@@ -1,0 +1,102 @@
+# ============================================================================
+# Magentic-UI Configuration for DGX Spark
+# ============================================================================
+# Configuration for running Magentic-UI with Fara-7B via vLLM
+# ============================================================================
+
+# Server Settings
+server:
+  host: "0.0.0.0"
+  port: 4200
+
+# Model Configuration
+model:
+  # vLLM endpoint
+  provider: "openai"  # vLLM uses OpenAI-compatible API
+  endpoint: "http://localhost:5000/v1"
+  model_name: "microsoft/Fara-7B"
+  api_key: "local-vllm"  # Placeholder for local vLLM
+  
+  # Inference parameters for agentic tasks
+  temperature: 0.0      # Deterministic for reliable actions
+  max_tokens: 2048      # Sufficient for most agentic responses
+  top_p: 1.0
+
+# Agent Configuration
+agents:
+  # Orchestrator - Plans and coordinates tasks
+  orchestrator:
+    enabled: true
+    max_planning_steps: 10
+    
+  # WebSurfer - Browser automation
+  websurfer:
+    enabled: true
+    max_steps_per_request: 15
+    browser_headless: true
+    viewport_width: 1920
+    viewport_height: 1080
+    timeout_ms: 30000
+    
+  # Coder - Code generation and execution
+  coder:
+    enabled: true
+    max_retries: 3
+    execution_timeout_sec: 60
+    
+  # FileSurfer - File operations
+  filesurfer:
+    enabled: true
+    allowed_extensions:
+      - ".txt"
+      - ".md"
+      - ".json"
+      - ".yaml"
+      - ".py"
+      - ".js"
+      - ".html"
+      - ".css"
+      - ".csv"
+
+# Browser Configuration
+browser:
+  headless: true
+  executable_path: null  # Use Playwright's bundled Chromium
+  
+  # Viewport settings
+  viewport:
+    width: 1920
+    height: 1080
+  
+  # Timeouts
+  navigation_timeout: 30000
+  action_timeout: 10000
+  
+  # Security
+  allow_list: []  # Empty = all sites allowed
+  block_list: []
+
+# Workspace Configuration
+workspace:
+  path: "./workspace"
+  shared: true
+  max_file_size_mb: 100
+
+# Security Settings
+security:
+  sandbox_enabled: true
+  docker_isolation: true
+  action_approval_required: false  # Set true for human-in-the-loop
+
+# Logging
+logging:
+  level: "INFO"
+  file: "./logs/magentic-ui.log"
+  console: true
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# Memory Configuration (for plan storage)
+memory:
+  enabled: true
+  storage_path: "./workspace/.magentic-memory"
+  max_stored_plans: 100
