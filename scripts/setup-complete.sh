@@ -221,10 +221,22 @@ ENVEOF
 setup_huggingface() {
     print_section "Setting Up HuggingFace"
     
-    # Install HuggingFace CLI if needed
+    local VENV_DIR="${PROJECT_ROOT}/venv"
+    
+    # Create virtual environment early if it doesn't exist (needed for huggingface-cli)
+    if [ ! -d "$VENV_DIR" ]; then
+        log STEP "Creating Python virtual environment..."
+        python3 -m venv "$VENV_DIR"
+        log OK "Virtual environment created"
+    fi
+    
+    # Activate venv and install HuggingFace CLI if needed
+    source "${VENV_DIR}/bin/activate"
+    
     if ! command -v huggingface-cli &> /dev/null; then
         log STEP "Installing HuggingFace Hub..."
-        pip3 install --user huggingface_hub[cli]
+        pip install --upgrade pip
+        pip install "huggingface_hub[cli]"
         log OK "HuggingFace Hub installed"
     else
         log OK "HuggingFace CLI already installed"
