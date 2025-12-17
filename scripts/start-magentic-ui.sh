@@ -27,6 +27,7 @@ if [ -f "${PROJECT_ROOT}/.env" ]; then
 fi
 
 # Configuration
+MAGENTIC_UI_HOST="${MAGENTIC_UI_HOST:-0.0.0.0}"
 MAGENTIC_UI_PORT="${MAGENTIC_UI_PORT:-4200}"
 VLLM_PORT="${VLLM_PORT:-5000}"
 VLLM_MODEL="${VLLM_MODEL:-microsoft/Fara-7B}"
@@ -40,6 +41,7 @@ echo "╚═══════════════════════�
 echo -e "${NC}"
 
 echo -e "${BLUE}Configuration:${NC}"
+echo "  Host:           $MAGENTIC_UI_HOST"
 echo "  Port:           $MAGENTIC_UI_PORT"
 echo "  vLLM Endpoint:  http://localhost:${VLLM_PORT}"
 echo "  Model:          $VLLM_MODEL"
@@ -96,6 +98,7 @@ echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 
-# Run Magentic-UI with the port flag and FARA config
+# Run Magentic-UI with host/port flags and FARA config
+# Binding to 0.0.0.0 enables live browser view and network access
 cd "${PROJECT_ROOT}/workspace"
-magentic-ui --fara --port ${MAGENTIC_UI_PORT} --config "${FARA_CONFIG}"
+magentic-ui --fara --host ${MAGENTIC_UI_HOST} --port ${MAGENTIC_UI_PORT} --config "${FARA_CONFIG}"
