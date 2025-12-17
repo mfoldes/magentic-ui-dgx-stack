@@ -68,7 +68,9 @@ if [ ! -d "$VENV_DIR" ]; then
     echo "Installing Magentic-UI..."
     source "${VENV_DIR}/bin/activate"
     pip install --upgrade pip setuptools wheel
-    pip install "magentic-ui[all] @ git+https://github.com/microsoft/magentic-ui.git"
+    # Install from PyPI (includes pre-built frontend)
+    # Note: Installing from git does NOT include frontend build files
+    pip install "magentic-ui[all]"
     playwright install chromium
     deactivate
     echo -e "${GREEN}✓ Magentic-UI installed${NC}"

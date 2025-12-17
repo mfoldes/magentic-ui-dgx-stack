@@ -178,10 +178,13 @@ See `fine-tuning/README.md` for detailed documentation.
 
 | Issue | Solution |
 |-------|----------|
+| `{"detail":"Not Found"}` on web UI | Frontend files missing. Reinstall from PyPI: `pip install --force-reinstall "magentic-ui[all]"` (not from git) |
 | CUDA out of memory | Clear cache: `sudo sh -c 'sync; echo 3 > /proc/sys/vm/drop_caches'` |
 | Model loading fails | Verify HuggingFace token and model access |
 | vLLM connection refused | Check vLLM server: `./scripts/health-check.sh` |
 | Browser issues | Reinstall Playwright: `playwright install chromium` |
+
+> **Important:** Always install Magentic-UI from PyPI (`pip install "magentic-ui[all]"`), not directly from git. The git repository does not include pre-built frontend files, which causes the "Not Found" error when accessing the web interface.
 
 ### View Logs
 

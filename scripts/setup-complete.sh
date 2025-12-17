@@ -308,8 +308,10 @@ setup_magentic_ui() {
     
     pip install --upgrade pip setuptools wheel
     
-    # Install magentic-ui from GitHub
-    pip install "magentic-ui[all] @ git+https://github.com/microsoft/magentic-ui.git"
+    # Install magentic-ui from PyPI (includes pre-built frontend)
+    # Note: Installing from git (pip install "magentic-ui[all] @ git+https://...")
+    # does NOT include the frontend build, causing "Not Found" errors on the web UI.
+    pip install "magentic-ui[all]"
     
     # Install Playwright browsers
     log STEP "Installing Playwright browsers..."
